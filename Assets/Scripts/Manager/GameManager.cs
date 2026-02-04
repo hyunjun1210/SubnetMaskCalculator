@@ -1,0 +1,45 @@
+using System.Runtime.InteropServices;
+using System;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+
+    private static GameManager m_instance = null;
+    public static GameManager Instance => m_instance;
+
+    private void Awake()
+    {
+        if (m_instance == null)
+        {
+            m_instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    [DllImport("user32.dll")]
+    static extern IntPtr GetActiveWindow();
+
+    [DllImport("user32.dll")]
+    static extern int SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
+
+    [DllImport("user32.dll")]
+    static extern uint GetWindowLong(IntPtr hWnd, int nIndex);
+
+    const int GWL_STYLE = -16;
+    const uint WS_POPUP = 0x80000000;
+    const uint WS_VISIBLE = 0x10000000;
+
+    void Start()
+    {
+#if !UNITY_EDITOR
+        Screen.SetResolution(800, 900, false);
+        IntPtr hwnd = GetActiveWindow();
+        SetWindowLong(hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+#endif
+    }
+}
