@@ -91,8 +91,42 @@ public class UIManager : MonoBehaviour
         int index = (int)networkBitValue - 24;
         string value = (index - 1) < 0 ? "0" : hostBits[index - 1].ToString();
         maskBitText.text = $"255.255.255.{value}";
-        if (string.IsNullOrEmpty(fields[0].text) || string.IsNullOrEmpty(fields[1].text) ||
-            string.IsNullOrEmpty(fields[2].text) || string.IsNullOrEmpty(fields[3].text))
+
+        if (int.TryParse(fields[0].text, out int res1))
+        {
+            fields[0].text = Mathf.Clamp(res1, 0, 255).ToString();
+        }
+        else
+        {
+            fields[0].text = string.Empty;
+        }
+        if (int.TryParse(fields[1].text, out int res2))
+        {
+            fields[1].text = Mathf.Clamp(res2, 0, 255).ToString();
+        }
+        else
+        {
+            fields[1].text = string.Empty;
+        }
+        if (int.TryParse(fields[2].text, out int res3))
+        {
+            fields[2].text = Mathf.Clamp(res3, 0, 255).ToString();
+        }
+        else
+        {
+            fields[2].text = string.Empty;
+        }
+        if (int.TryParse(fields[3].text, out int res4))
+        {
+            fields[3].text = Mathf.Clamp(res4, 0, 255).ToString();
+        }
+        else
+        {
+            fields[3].text = string.Empty;
+        }
+
+        if ((string.IsNullOrEmpty(fields[0].text) || string.IsNullOrEmpty(fields[1].text) ||
+            string.IsNullOrEmpty(fields[2].text) || string.IsNullOrEmpty(fields[3].text)))
         {
             CurrentNetwork(" ");
             CurrentHostRange(" ", " ");
@@ -116,7 +150,7 @@ public class UIManager : MonoBehaviour
             hostText[3].text = Convert.ToString(int.Parse(fields[3].text), 2);
 
             maskText.text = n4;
-            
+
             subnetText[0].text = n1;
             subnetText[1].text = n2;
             subnetText[2].text = n3;
