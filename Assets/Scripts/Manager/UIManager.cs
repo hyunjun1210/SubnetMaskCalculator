@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,10 +6,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    #region  Singleton
+    #region Singleton
+
     private static UIManager m_instance = null;
     public static UIManager Instance => m_instance;
-        
+
     private void Awake()
     {
         if (m_instance == null)
@@ -21,33 +23,38 @@ public class UIManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
     #endregion
-    
+
     public List<TMP_InputField> fields = new List<TMP_InputField>();
     public TextMeshProUGUI currentNetwork = null;
     public TextMeshProUGUI currentHostRange = null;
-    
+
     public Slider Slider = null;
 
     public TextMeshProUGUI networkBit = null;
     public TextMeshProUGUI hostBit = null;
     
+    public List<TextMeshProUGUI> hostText = new List<TextMeshProUGUI>();
+    public TextMeshProUGUI maskText = null;
+   public List<TextMeshProUGUI> subnetText = new List<TextMeshProUGUI>();
+
     public TextMeshProUGUI maskBitText = null;
-    
+
     public int networkBitValue = 0;
-    
+
     [SerializeField] uint[] hostBits = new uint[8];
 
     uint maskBit = 0b11111111111111111111111100000000;
 
     public void NumberDec()
     {
-        Slider.value =  Slider.value - 1;
+        Slider.value = Slider.value - 1;
     }
-    
+
     public void NumberInc()
     {
-        Slider.value =  Slider.value + 1;
+        Slider.value = Slider.value + 1;
     }
 
     public void CurrentNetwork(string text)
@@ -95,9 +102,25 @@ public class UIManager : MonoBehaviour
             string network =
                 $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{int.Parse(fields[3].text) & int.Parse(value)}";
             CurrentNetwork(network);
-            CurrentHostRange($"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(int.Parse(fields[3].text) & int.Parse(value)) + 1}", $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(256 >> index) - 2}");
+            CurrentHostRange(
+                $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(int.Parse(fields[3].text) & int.Parse(value))}",
+                $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(int.Parse(fields[3].text) & int.Parse(value)) + (256 >> index) - 2}");
+            string n1 = Convert.ToString(int.Parse(fields[0].text), 2);
+            string n2 = Convert.ToString(int.Parse(fields[1].text), 2);
+            string n3 = Convert.ToString(int.Parse(fields[2].text), 2);
+            string n4 = Convert.ToString(int.Parse(fields[3].text) & int.Parse(value), 2);
+
+            hostText[0].text = n1;
+            hostText[1].text = n2;
+            hostText[2].text = n3;
+            hostText[3].text = Convert.ToString(int.Parse(fields[3].text), 2);
+
+            maskText.text = n4;
+            
+            subnetText[0].text = n1;
+            subnetText[1].text = n2;
+            subnetText[2].text = n3;
+            subnetText[3].text = n4;
         }
-        
-        
     }
 }
