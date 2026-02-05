@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
                 $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{int.Parse(fields[3].text) & int.Parse(value)}";
             CurrentNetwork(network);
             CurrentHostRange(
-                $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(int.Parse(fields[3].text) & int.Parse(value))}",
+                $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(int.Parse(fields[3].text) & int.Parse(value)) + 1}",
                 $"{fields[0].text}.{fields[1].text}.{fields[2].text}.{(int.Parse(fields[3].text) & int.Parse(value)) + (256 >> index) - 2}");
             string n1 = Convert.ToString(int.Parse(fields[0].text), 2);
             string n2 = Convert.ToString(int.Parse(fields[1].text), 2);
