@@ -4884,7 +4884,7 @@ MonoBehaviour:
   Slider: {fileID: 1416480543}
   networkBit: {fileID: 1486709911}
   hostBit: {fileID: 1796915316}
-  networkBitValue: 0
+  networkBitValue: 24
 --- !u!4 &1064827946
 Transform:
   m_ObjectHideFlags: 0

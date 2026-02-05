@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
     
     public int networkBitValue = 0;
 
+    public uint maskBit = 0b11111111111111111111111100000000;
+
     public void NumberDec()
     {
         Slider.value =  Slider.value - 1;
@@ -64,6 +66,8 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        networkBitValue = (int)Slider.value;
+        networkBitValue = Mathf.Clamp(networkBitValue, 24, 32);
         NetworkAndHostBit();
     }
 }
